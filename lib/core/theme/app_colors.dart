@@ -24,6 +24,8 @@ abstract final class AppColors {
 
   static const Color brand = Color(0xFF2563EB);
 
+  static const Color green = teal;
+
   // Semantic
   static const Color primary = teal;
   static const Color success = teal;

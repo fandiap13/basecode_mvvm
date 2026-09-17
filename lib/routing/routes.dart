@@ -6,12 +6,30 @@ abstract final class AppRoutes {
   // showcase
   static const showcase = '/showcase';
   static const showcaseButton = '/showcase/button';
-  static const showcaseBextField = '/showcase/text-field';
-  static const showcaseBropdown = '/showcase/dropdown';
-  static const showcaseBlider = '/showcase/slider';
-  static const showcaseBard = '/showcase/card';
-  static const showcaseBeedback = '/showcase/feedback';
-  static const showcaseBolors = '/showcase/colors';
-  static const showcaseBypography = '/showcase/typography';
-  static const showcaseBpacing = '/showcase/spacing';
+  static const showcaseIconButton = '/showcase/icon-button';
+  static const showcaseTextField = '/showcase/text-field';
+  static const showcaseForm = '/showcase/form';
+  static const showcaseDropdown = '/showcase/dropdown';
+  static const showcaseCheckboxRadio = '/showcase/checkbox-radio';
+  static const showcaseSwitch = '/showcase/switch';
+  static const showcaseSlider = '/showcase/slider';
+  static const showcaseCard = '/showcase/card';
+  static const showcaseListTile = '/showcase/list-tile';
+  static const showcaseChipBadge = '/showcase/chip-badge';
+  static const showcaseAvatar = '/showcase/avatar';
+  static const showcaseAppBar = '/showcase/app-bar';
+  static const showcaseTabs = '/showcase/tabs';
+  static const showcaseProgress = '/showcase/progress';
+  static const showcaseLoading = '/showcase/loading';
+  static const showcaseEmptyError = '/showcase/empty-error';
+  static const showcaseFeedback = '/showcase/feedback';
+  static const showcaseBottomSheet = '/showcase/bottom-sheet';
+
+  // showcase - foundation
+  static const showcaseColors = '/showcase/colors';
+  static const showcaseTypography = '/showcase/typography';
+  static const showcaseSpacing = '/showcase/spacing';
+  static const showcaseElevation = '/showcase/elevation';
+  static const showcaseIcons = '/showcase/icons';
+  static const showcaseBreakpoints = '/showcase/breakpoints';
 }
