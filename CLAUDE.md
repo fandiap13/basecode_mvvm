@@ -49,7 +49,8 @@ Prefer the Flutter/Dart SDK. Add a package only when the SDK cannot do the job.
 - **Never add a package without asking first.** Explain why the SDK is not enough and which level it is.
 - Every level-2 package must be recorded with its reason in `docs/DECISIONS.md`.
 - No code generation (`build_runner`, freezed, json_serializable, riverpod_generator, etc.).
-- Do not use GetX, Riverpod, Bloc, Provider, get_it, dio, go_router unless explicitly approved.
+- Do not use GetX, Riverpod, Bloc, Provider, get_it, dio unless explicitly approved.
+- `go_router` **is approved** and already in use. See the routing section below.
 
 Approved stack:
 
@@ -57,7 +58,7 @@ Approved stack:
 |---|---|---|
 | State management | `ChangeNotifier` + `ListenableBuilder` + `Command` (`core/command/`) | 0 |
 | Dependency injection | Constructor injection, assembled in `app/dependencies.dart` | 0 |
-| Routing | `Navigator` + `onGenerateRoute` in `routing/app_router.dart` | 0 |
+| Routing | `go_router` (`GoRouter` in `routing/app_router.dart`) | 2 |
 | JSON | Manual `fromJson` / `toJson` with Dart 3 pattern matching | 0 |
 | Logging | `dart:developer` `log()` wrapped by `core/logger/` | 0 |
 | Mocks in tests | Hand-written fakes (`implements`) | 0 |
@@ -98,6 +99,26 @@ A feature only creates the subfolders it needs (e.g. `profile/` may use `shared/
 ```
 view → viewmodel → repository → service → core/network
 ```
+
+### Routing (go_router)
+
+`app/app.dart` uses **`MaterialApp.router` + `routerConfig: appRouter`**. There is no `onGenerateRoute`.
+
+Navigate with go_router extensions on `BuildContext`, never Navigator 1.0:
+
+```dart
+import 'package:go_router/go_router.dart';
+
+context.push(AppRoutes.showcaseButton);  // push on top, back button returns
+context.go(AppRoutes.dashboard);         // replace the stack
+context.pop();                           // back
+```
+
+`Navigator.of(context).pushNamed(...)` throws `Navigator.onGenerateRoute was null` in this app — it is
+Navigator 1.0 API and `MaterialApp.router` does not set `onGenerateRoute`.
+
+Every route must be registered as a `GoRoute` in `routing/app_router.dart` before anything navigates to it,
+and its path always comes from a constant in `routing/routes.dart` (never a raw string).
 
 ### Import rules
 

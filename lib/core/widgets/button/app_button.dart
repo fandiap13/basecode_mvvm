@@ -1,5 +1,8 @@
+import 'package:basecode/core/theme/app_colors.dart';
+import 'package:basecode/core/theme/app_radius.dart';
 import 'package:flutter/material.dart';
 
+// variant
 enum AppButtonVariant {
   primary,
   secondary,
@@ -8,8 +11,10 @@ enum AppButtonVariant {
   info,
   outline,
   text,
+  dark,
 }
 
+// size
 enum AppButtonSize {
   small(height: 36, hPadding: 12, iconSize: 16, gap: 6),
   medium(height: 44, hPadding: 16, iconSize: 18, gap: 8),
@@ -28,12 +33,14 @@ enum AppButtonSize {
   final double gap;
 }
 
+// widget
 class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
     required this.label,
     required this.onPressed,
     this.variant = AppButtonVariant.primary,
+    this.radius = AppRadius.lg,
     this.size = AppButtonSize.medium,
     this.isLoading = false,
     this.isExpanded = false,
@@ -47,6 +54,7 @@ class AppButton extends StatelessWidget {
   final AppButtonSize size;
   final bool isLoading;
   final bool isExpanded;
+  final double radius;
   final IconData? leadingIcon;
   final IconData? trailingIcon;
 
@@ -77,6 +85,11 @@ class AppButton extends StatelessWidget {
         style: style,
         child: child,
       ),
+      AppButtonVariant.dark => FilledButton.tonal(
+        onPressed: callback,
+        style: style,
+        child: child,
+      ),
       AppButtonVariant.info => FilledButton.tonal(
         onPressed: callback,
         style: style,
@@ -99,16 +112,19 @@ class AppButton extends StatelessWidget {
       ),
     };
 
+    // memblokir interaksi tab saat loading
     return IgnorePointer(
       ignoring: isLoading,
-      child: isExpanded
+      child:
+          isExpanded // button memenuhi lebar parent
           ? SizedBox(width: double.infinity, child: button)
           : button,
     );
   }
 
   ButtonStyle _style(ThemeData theme) {
-    final cs = theme.colorScheme;
+    // final cs = theme.colorScheme;
+    final c = theme.appColors;
     final base = ButtonStyle(
       minimumSize: WidgetStatePropertyAll(Size(0, size.height)),
       padding: WidgetStatePropertyAll(
@@ -116,23 +132,76 @@ class AppButton extends StatelessWidget {
       ),
       textStyle: WidgetStatePropertyAll(theme.textTheme.labelLarge),
     );
-    if (variant != AppButtonVariant.danger) return base;
+
+    final backgroundColor = switch (variant) {
+      AppButtonVariant.primary => c.primary,
+      AppButtonVariant.secondary => c.secondary,
+      AppButtonVariant.danger => c.danger,
+      AppButtonVariant.warning => c.warning,
+      AppButtonVariant.info => c.brand,
+      AppButtonVariant.outline => Colors.transparent,
+      AppButtonVariant.text => Colors.transparent,
+      AppButtonVariant.dark => c.ink,
+    };
+
+    final foregroundColor = switch (variant) {
+      AppButtonVariant.primary => c.surface,
+      AppButtonVariant.secondary => c.surface,
+      AppButtonVariant.danger => c.surface,
+      AppButtonVariant.warning => c.surface,
+      AppButtonVariant.info => c.surface,
+      AppButtonVariant.outline => c.ink,
+      AppButtonVariant.text => c.ink,
+      AppButtonVariant.dark => c.surface,
+    };
+
+    // Variant tanpa background: overlay diambil dari warna teks agar terlihat.
+    final isFlat =
+        variant == AppButtonVariant.outline || variant == AppButtonVariant.text;
+    final overlayBase = isFlat ? foregroundColor : c.ink;
 
     return base.copyWith(
       backgroundColor: WidgetStateProperty.resolveWith(
         (s) => s.contains(WidgetState.disabled)
-            ? cs.onSurface.withValues(alpha: 0.12)
-            : cs.error,
+            ? backgroundColor.withValues(alpha: 0.12)
+            : backgroundColor,
       ),
       foregroundColor: WidgetStateProperty.resolveWith(
         (s) => s.contains(WidgetState.disabled)
-            ? cs.onSurface.withValues(alpha: 0.38)
-            : cs.onError,
+            ? backgroundColor.withValues(alpha: 0.38)
+            : foregroundColor,
+      ),
+      // Feedback hover/press/focus. Tanpa ini warna button sama di semua state
+      // dan hanya ripple yang terlihat.
+      overlayColor: WidgetStateProperty.resolveWith((s) {
+        if (s.contains(WidgetState.pressed)) {
+          return overlayBase.withValues(alpha: 0.18);
+        }
+        if (s.contains(WidgetState.hovered)) {
+          return overlayBase.withValues(alpha: 0.10);
+        }
+        if (s.contains(WidgetState.focused)) {
+          return overlayBase.withValues(alpha: 0.14);
+        }
+        return null;
+      }),
+      // Sedikit terangkat saat hover, rata lagi saat ditekan.
+      elevation: WidgetStateProperty.resolveWith((s) {
+        if (isFlat || s.contains(WidgetState.disabled)) return 0;
+        if (s.contains(WidgetState.pressed)) return 0;
+        if (s.contains(WidgetState.hovered)) return 3;
+        return 1;
+      }),
+      shadowColor: WidgetStatePropertyAll(backgroundColor),
+      animationDuration: const Duration(milliseconds: 150),
+      shape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius)),
       ),
     );
   }
 }
 
+// mengatur isi dalam button
 class _AppButtonContent extends StatelessWidget {
   const _AppButtonContent({
     required this.label,

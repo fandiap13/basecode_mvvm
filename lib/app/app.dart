@@ -17,6 +17,7 @@ class App extends StatelessWidget {
       darkTheme: AppTheme.dark(),
       debugShowCheckedModeBanner: env.isDev,
       // home: const GalleryScreen(),
+      // themeMode: ThemeMode.light,
       themeMode: ThemeMode.light,
       routerConfig: appRouter,
     );

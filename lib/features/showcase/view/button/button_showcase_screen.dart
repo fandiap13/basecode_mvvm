@@ -1,16 +1,17 @@
+import 'package:basecode/core/theme/app_colors.dart';
 import 'package:basecode/core/widgets/button/app_button.dart';
 import 'package:flutter/material.dart';
 
 /// Etalase sementara untuk widget di `core/widgets/`.
 /// Hapus setelah layar asli pertama dibuat.
-class ShowcaseScreen extends StatefulWidget {
-  const ShowcaseScreen({super.key});
+class ButtonShowcaseScreen extends StatefulWidget {
+  const ButtonShowcaseScreen({super.key});
 
   @override
-  State<ShowcaseScreen> createState() => ShowcaseScreenState();
+  State<ButtonShowcaseScreen> createState() => ButtonShowcaseScreenState();
 }
 
-class ShowcaseScreenState extends State<ShowcaseScreen> {
+class ButtonShowcaseScreenState extends State<ButtonShowcaseScreen> {
   // State lokal layar: cukup setState, belum perlu viewmodel.
   bool _isLoading = false;
 
@@ -19,7 +20,15 @@ class ShowcaseScreenState extends State<ShowcaseScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('App Button')),
+      appBar: AppBar(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.surface,
+        title: Text(
+          'App Button',
+          style: Theme.of(context).textTheme.titleLarge
+              ?.copyWith(color: AppColors.paper),
+        ),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

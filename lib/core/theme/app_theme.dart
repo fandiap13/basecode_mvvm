@@ -8,10 +8,22 @@ abstract final class AppTheme {
   static ThemeData dark() => _build(Brightness.dark);
 
   static ThemeData _build(Brightness brightness) {
-    final cs = ColorScheme.fromSeed(
-      seedColor: AppColors.brand,
-      brightness: brightness,
-    );
+    final isDark = brightness == Brightness.dark;
+    final colors = isDark ? AppColorsTheme.dark : AppColorsTheme.light;
+
+    // ColorScheme adalah sistem warna semantic Flutter Material.
+    // Warna dari AppColorsTheme dipetakan ke role yang digunakan widget Material.
+    final cs =
+        ColorScheme.fromSeed(
+          seedColor: colors.brand,
+          brightness: brightness,
+        ).copyWith(
+          primary: colors.primary,
+          surface: colors.surface,
+          onSurface: colors.ink,
+          error: colors.danger,
+          outline: colors.line,
+        );
 
     const buttonStyle = ButtonStyle(
       shape: WidgetStatePropertyAll(
@@ -23,9 +35,19 @@ abstract final class AppTheme {
 
     return ThemeData(
       colorScheme: cs,
+
+      // background utama app
+      scaffoldBackgroundColor: colors.paper,
+
+      // Custom design tokens yang dapat diakses melalui:
+      // Theme.of(context).appColors
+      extensions: [colors],
+
+      // config typograpy aplikasi
       fontFamily: AppTypography.fontFamily, // font setting
       textTheme: AppTypography.textTheme(cs), // text setting
-
+      
+      // button theme
       filledButtonTheme: const FilledButtonThemeData(style: buttonStyle),
       outlinedButtonTheme: const OutlinedButtonThemeData(style: buttonStyle),
       textButtonTheme: const TextButtonThemeData(style: buttonStyle),

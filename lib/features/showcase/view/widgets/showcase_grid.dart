@@ -2,6 +2,7 @@ import 'package:basecode/core/theme/app_colors.dart';
 import 'package:basecode/features/showcase/model/showcase_entry.dart';
 import 'package:basecode/features/showcase/view/widgets/section_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ShowcaseGrid extends StatefulWidget {
   const ShowcaseGrid({super.key, required this.entries});
@@ -39,9 +40,7 @@ class _ShowcaseGridState extends State<ShowcaseGrid> {
             return Opacity(
               opacity: entry.isReady ? 1 : 0.45, // jadi buram opacity 45%
               child: SectionCard(
-                onTap: entry.isReady
-                    ? () => Navigator.of(context).pushNamed(entry.route)
-                    : null,
+                onTap: entry.isReady ? () => context.push(entry.route) : null,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
