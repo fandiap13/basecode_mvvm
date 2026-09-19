@@ -88,6 +88,7 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'Label & Status',
     route: AppRoutes.showcaseChipBadge,
     icon: Icons.label_outline,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Avatar',
@@ -141,18 +142,21 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'Placeholder State',
     route: AppRoutes.showcaseEmptyError,
     icon: Icons.error_outline,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Feedback',
     subtitle: 'Dialog & Snackbar',
     route: AppRoutes.showcaseFeedback,
     icon: Icons.feedback_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Bottom Sheet',
     subtitle: 'Modal & Persistent',
     route: AppRoutes.showcaseBottomSheet,
     icon: Icons.vertical_align_bottom_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Colors',

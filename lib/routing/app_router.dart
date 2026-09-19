@@ -1,11 +1,15 @@
 import 'package:basecode/features/showcase/view/app_bar/app_bar_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/avatar/avatar_showcase_screen.dart';
+import 'package:basecode/features/showcase/view/bottom_sheet/bottom_sheet_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/button/button_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/button/icon_button_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/card/card_showcase_screen.dart';
+import 'package:basecode/features/showcase/view/chip/chip_badge_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/carousel/carousel_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/checkbox/checkbox_radio_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/dropdown/dropdown_showcase_screen.dart';
+import 'package:basecode/features/showcase/view/empty_error/empty_error_showcase_screen.dart';
+import 'package:basecode/features/showcase/view/feedback/feedback_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/form/form_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/foundation/breakpoints_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/foundation/colors_showcase_screen.dart';
@@ -66,6 +70,22 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.showcaseAvatar,
       builder: (context, state) => const AvatarShowcaseScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.showcaseEmptyError,
+      builder: (context, state) => const EmptyErrorShowcaseScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.showcaseFeedback,
+      builder: (context, state) => const FeedbackShowcaseScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.showcaseChipBadge,
+      builder: (context, state) => const ChipBadgeShowcaseScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.showcaseBottomSheet,
+      builder: (context, state) => const BottomSheetShowcaseScreen(),
     ),
     GoRoute(
       path: AppRoutes.showcaseForm,

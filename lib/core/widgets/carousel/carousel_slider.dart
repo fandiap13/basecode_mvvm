@@ -2,6 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+// variant
+// TODO: LANJUTIN INI
+enum AppCarouselVariant {
+  primary,
+  secondary,
+  danger,
+  warning,
+  info,
+  outline,
+  text,
+  dark,
+}
+
 class AppCarousel extends StatefulWidget {
   const AppCarousel({
     super.key,
