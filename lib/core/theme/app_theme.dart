@@ -46,11 +46,24 @@ abstract final class AppTheme {
       // config typograpy aplikasi
       fontFamily: AppTypography.fontFamily, // font setting
       textTheme: AppTypography.textTheme(cs), // text setting
-      
       // button theme
       filledButtonTheme: const FilledButtonThemeData(style: buttonStyle),
       outlinedButtonTheme: const OutlinedButtonThemeData(style: buttonStyle),
       textButtonTheme: const TextButtonThemeData(style: buttonStyle),
+
+      // card theme
+      // Default card: rata (tanpa bayangan), bersandar pada surface + garis
+      // tipis. AppCard hanya override shape saat radius-nya dikustomisasi.
+      cardTheme: CardThemeData(
+        color: colors.surface,
+        elevation: 0,
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(AppRadius.md)),
+          side: BorderSide(color: colors.line),
+        ),
+      ),
     );
   }
 }

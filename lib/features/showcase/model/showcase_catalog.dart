@@ -17,12 +17,14 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'Compact Action',
     route: AppRoutes.showcaseIconButton,
     icon: Icons.touch_app_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Text Field',
     subtitle: 'Input & Validation',
     route: AppRoutes.showcaseTextField,
     icon: Icons.text_fields_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Form',
@@ -42,6 +44,7 @@ const showcaseEntries = <ShowcaseEntry>[
     route: AppRoutes.showcaseCheckboxRadio,
     icon: Icons.check_box_outlined,
   ),
+
   ShowcaseEntry(
     title: 'Switch',
     subtitle: 'Toggle',
@@ -59,6 +62,7 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'Container & Surface',
     route: AppRoutes.showcaseCard,
     icon: Icons.credit_card_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'List Tile',
@@ -91,10 +95,23 @@ const showcaseEntries = <ShowcaseEntry>[
     icon: Icons.tab_outlined,
   ),
   ShowcaseEntry(
+    title: 'Tabs Bussines',
+    subtitle: 'Tab bussines (main)',
+    route: AppRoutes.showcaseMainTabs,
+    icon: Icons.tab_outlined,
+  ),
+  ShowcaseEntry(
     title: 'Progress',
     subtitle: 'Bar & Percentage',
     route: AppRoutes.showcaseProgress,
     icon: Icons.donut_large_outlined,
+  ),
+  ShowcaseEntry(
+    title: 'Skeleton',
+    subtitle: 'Loading States',
+    route: AppRoutes.showcaseSkeleton,
+    icon: Icons.hourglass_empty,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Loading',

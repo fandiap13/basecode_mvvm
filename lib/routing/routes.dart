@@ -19,11 +19,13 @@ abstract final class AppRoutes {
   static const showcaseAvatar = '/showcase/avatar';
   static const showcaseAppBar = '/showcase/app-bar';
   static const showcaseTabs = '/showcase/tabs';
+  static const showcaseMainTabs = '/showcase/tabs-main';
   static const showcaseProgress = '/showcase/progress';
   static const showcaseLoading = '/showcase/loading';
   static const showcaseEmptyError = '/showcase/empty-error';
   static const showcaseFeedback = '/showcase/feedback';
   static const showcaseBottomSheet = '/showcase/bottom-sheet';
+  static const showcaseSkeleton = '/showcase/skeleton';
 
   // showcase - foundation
   static const showcaseColors = '/showcase/colors';

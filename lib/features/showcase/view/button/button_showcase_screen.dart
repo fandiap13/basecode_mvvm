@@ -1,5 +1,6 @@
 import 'package:basecode/core/theme/app_colors.dart';
 import 'package:basecode/core/widgets/button/app_button.dart';
+import 'package:basecode/features/showcase/view/widgets/section_showcase.dart';
 import 'package:flutter/material.dart';
 
 /// Etalase sementara untuk widget di `core/widgets/`.
@@ -19,20 +20,24 @@ class ButtonShowcaseScreenState extends State<ButtonShowcaseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.surface,
         title: Text(
           'App Button',
-          style: Theme.of(context).textTheme.titleLarge
-              ?.copyWith(color: AppColors.paper),
+          style: theme.textTheme.titleLarge?.copyWith(color: AppColors.paper),
         ),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const _Section('Variant'),
+          const SectionShowcase(
+            'Variant',
+            description: 'Warna diambil dari token tema, bukan nilai hardcode.',
+          ),
           for (final variant in AppButtonVariant.values)
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
@@ -44,7 +49,12 @@ class ButtonShowcaseScreenState extends State<ButtonShowcaseScreen> {
               ),
             ),
 
-          const _Section('Size'),
+          const SectionShowcase(
+            'Size',
+            description:
+                'Tiap ukuran membawa metrik sendiri (height, '
+                'hPadding, iconSize, gap).',
+          ),
           for (final size in AppButtonSize.values)
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
@@ -56,7 +66,10 @@ class ButtonShowcaseScreenState extends State<ButtonShowcaseScreen> {
               ),
             ),
 
-          const _Section('Icon'),
+          const SectionShowcase(
+            'Icon',
+            description: 'Ikon depan atau belakang label.',
+          ),
           AppButton(
             label: 'Leading icon',
             leadingIcon: Icons.add,
@@ -71,16 +84,62 @@ class ButtonShowcaseScreenState extends State<ButtonShowcaseScreen> {
             onPressed: () {},
           ),
 
-          const _Section('Disabled'),
-          const AppButton(label: 'Disabled', onPressed: null),
+          const SectionShowcase(
+            'Border',
+            description:
+                'Tanpa borderColor: hanya outline yang bergaris, '
+                'sewarna teksnya. Diisi borderColor: garis muncul di variant '
+                'mana pun.',
+          ),
+          AppButton(
+            label: 'outline (default)',
+            variant: AppButtonVariant.outline,
+            isLoading: _isLoading,
+            onPressed: () {},
+          ),
+          const SizedBox(height: 8),
+          AppButton(
+            label: 'primary + borderColor',
+            borderColor: theme.appColors.ink,
+            isLoading: _isLoading,
+            onPressed: () {},
+          ),
+          const SizedBox(height: 8),
+          AppButton(
+            label: 'outline + borderWidth 2',
+            variant: AppButtonVariant.outline,
+            borderColor: theme.appColors.danger,
+            borderWidth: 2,
+            isLoading: _isLoading,
+            onPressed: () {},
+          ),
 
-          const _Section('Expanded'),
+          const SectionShowcase(
+            'Disabled',
+            description:
+                'onPressed: null menandakan tombol nonaktif. '
+                'Border ikut meredup.',
+          ),
+          const AppButton(label: 'Disabled', onPressed: null),
+          const SizedBox(height: 8),
+          const AppButton(
+            label: 'Disabled outline',
+            variant: AppButtonVariant.outline,
+            onPressed: null,
+          ),
+
+          const SectionShowcase(
+            'Expanded',
+            description: 'isExpanded membuat tombol selebar induknya.',
+          ),
           AppButton(
             label: 'Expanded',
             isExpanded: true,
             isLoading: _isLoading,
             onPressed: () {},
           ),
+
+          const SizedBox(height: 80),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -88,20 +147,6 @@ class ButtonShowcaseScreenState extends State<ButtonShowcaseScreen> {
         icon: Icon(_isLoading ? Icons.stop : Icons.hourglass_empty),
         label: Text(_isLoading ? 'Stop loading' : 'Show loading'),
       ),
-    );
-  }
-}
-
-class _Section extends StatelessWidget {
-  const _Section(this.title);
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16, bottom: 8),
-      child: Text(title, style: Theme.of(context).textTheme.titleSmall),
     );
   }
 }

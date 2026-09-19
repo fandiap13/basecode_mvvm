@@ -46,6 +46,8 @@ class AppButton extends StatelessWidget {
     this.isExpanded = false,
     this.leadingIcon,
     this.trailingIcon,
+    this.borderColor,
+    this.borderWidth = 1,
   });
 
   final String label;
@@ -57,6 +59,8 @@ class AppButton extends StatelessWidget {
   final double radius;
   final IconData? leadingIcon;
   final IconData? trailingIcon;
+  final Color? borderColor;
+  final double borderWidth;
 
   static void _noop() {}
 
@@ -160,6 +164,15 @@ class AppButton extends StatelessWidget {
         variant == AppButtonVariant.outline || variant == AppButtonVariant.text;
     final overlayBase = isFlat ? foregroundColor : c.ink;
 
+    // Border default mengikuti peran variant, bukan warna background:
+    // garis sewarna background tidak akan terlihat, jadi mubazir.
+    // - outline  : garis sewarna teks supaya menyatu
+    // - lainnya  : tanpa garis, bentuk sudah jelas dari blok warnanya
+    // borderColor dari pemanggil menimpa semuanya.
+    final resolvedBorder =
+        borderColor ??
+        (variant == AppButtonVariant.outline ? foregroundColor : null);
+
     return base.copyWith(
       backgroundColor: WidgetStateProperty.resolveWith(
         (s) => s.contains(WidgetState.disabled)
@@ -171,6 +184,17 @@ class AppButton extends StatelessWidget {
             ? backgroundColor.withValues(alpha: 0.38)
             : foregroundColor,
       ),
+      // Border ikut meredup saat disabled agar sejalan dengan background
+      // dan foreground.
+      side: WidgetStateProperty.resolveWith((s) {
+        if (resolvedBorder == null) return BorderSide.none;
+        return BorderSide(
+          color: s.contains(WidgetState.disabled)
+              ? resolvedBorder.withValues(alpha: 0.38)
+              : resolvedBorder,
+          width: borderWidth,
+        );
+      }),
       // Feedback hover/press/focus. Tanpa ini warna button sama di semua state
       // dan hanya ripple yang terlihat.
       overlayColor: WidgetStateProperty.resolveWith((s) {
@@ -186,11 +210,12 @@ class AppButton extends StatelessWidget {
         return null;
       }),
       // Sedikit terangkat saat hover, rata lagi saat ditekan.
-      elevation: WidgetStateProperty.resolveWith((s) {
+      elevation: WidgetStateProperty.resolveWith<double?>((s) {
         if (isFlat || s.contains(WidgetState.disabled)) return 0;
         if (s.contains(WidgetState.pressed)) return 0;
         if (s.contains(WidgetState.hovered)) return 3;
-        return 1;
+
+        return 0;
       }),
       shadowColor: WidgetStatePropertyAll(backgroundColor),
       animationDuration: const Duration(milliseconds: 150),
