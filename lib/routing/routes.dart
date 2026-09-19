@@ -26,6 +26,7 @@ abstract final class AppRoutes {
   static const showcaseFeedback = '/showcase/feedback';
   static const showcaseBottomSheet = '/showcase/bottom-sheet';
   static const showcaseSkeleton = '/showcase/skeleton';
+  static const showcaseCarousel = '/showcase/carousel';
 
   // showcase - foundation
   static const showcaseColors = '/showcase/colors';

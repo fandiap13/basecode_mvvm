@@ -27,22 +27,18 @@ const showcaseEntries = <ShowcaseEntry>[
     isReady: true,
   ),
   ShowcaseEntry(
-    title: 'Form',
-    subtitle: 'Layout & Submit',
-    route: AppRoutes.showcaseForm,
-    icon: Icons.assignment_outlined,
-  ),
-  ShowcaseEntry(
     title: 'Dropdown',
     subtitle: 'Selection',
     route: AppRoutes.showcaseDropdown,
     icon: Icons.arrow_drop_down_circle_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Checkbox & Radio',
     subtitle: 'Multiple & Single',
     route: AppRoutes.showcaseCheckboxRadio,
     icon: Icons.check_box_outlined,
+    isReady: true,
   ),
 
   ShowcaseEntry(
@@ -50,12 +46,21 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'Toggle',
     route: AppRoutes.showcaseSwitch,
     icon: Icons.toggle_on_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Slider',
     subtitle: 'Range & Value',
     route: AppRoutes.showcaseSlider,
     icon: Icons.tune_outlined,
+    isReady: true,
+  ),
+  ShowcaseEntry(
+    title: 'Form',
+    subtitle: 'Layout & Submit',
+    route: AppRoutes.showcaseForm,
+    icon: Icons.assignment_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Card',
@@ -69,6 +74,14 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'Row & Leading',
     route: AppRoutes.showcaseListTile,
     icon: Icons.view_list_outlined,
+    isReady: true,
+  ),
+  ShowcaseEntry(
+    title: 'Carousel',
+    subtitle: 'Slide & Navigation',
+    route: AppRoutes.showcaseCarousel,
+    icon: Icons.view_carousel_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Chip & Badge',
@@ -81,12 +94,14 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'Image & Initial',
     route: AppRoutes.showcaseAvatar,
     icon: Icons.account_circle_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'App Bar',
     subtitle: 'Title & Action',
     route: AppRoutes.showcaseAppBar,
     icon: Icons.web_asset_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Tabs',
@@ -105,6 +120,7 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'Bar & Percentage',
     route: AppRoutes.showcaseProgress,
     icon: Icons.donut_large_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Skeleton',
@@ -118,6 +134,7 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'Spinner & Skeleton',
     route: AppRoutes.showcaseLoading,
     icon: Icons.hourglass_empty_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Empty & Error',
@@ -143,6 +160,7 @@ const showcaseEntries = <ShowcaseEntry>[
     route: AppRoutes.showcaseColors,
     icon: Icons.palette_outlined,
     category: ShowcaseCategory.foundation,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Typography',
@@ -150,6 +168,7 @@ const showcaseEntries = <ShowcaseEntry>[
     route: AppRoutes.showcaseTypography,
     icon: Icons.text_format_outlined,
     category: ShowcaseCategory.foundation,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Spacing',
@@ -157,6 +176,7 @@ const showcaseEntries = <ShowcaseEntry>[
     route: AppRoutes.showcaseSpacing,
     icon: Icons.space_bar_outlined,
     category: ShowcaseCategory.foundation,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Elevation',
@@ -164,13 +184,7 @@ const showcaseEntries = <ShowcaseEntry>[
     route: AppRoutes.showcaseElevation,
     icon: Icons.layers_outlined,
     category: ShowcaseCategory.foundation,
-  ),
-  ShowcaseEntry(
-    title: 'Icons',
-    subtitle: 'Icon Set',
-    route: AppRoutes.showcaseIcons,
-    icon: Icons.emoji_symbols_outlined,
-    category: ShowcaseCategory.foundation,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Breakpoints',
@@ -178,5 +192,13 @@ const showcaseEntries = <ShowcaseEntry>[
     route: AppRoutes.showcaseBreakpoints,
     icon: Icons.devices_outlined,
     category: ShowcaseCategory.foundation,
+    isReady: true,
   ),
+  // ShowcaseEntry(
+  //   title: 'Icons',
+  //   subtitle: 'Icon Set',
+  //   route: AppRoutes.showcaseIcons,
+  //   icon: Icons.emoji_symbols_outlined,
+  //   category: ShowcaseCategory.foundation,
+  // ),
 ];

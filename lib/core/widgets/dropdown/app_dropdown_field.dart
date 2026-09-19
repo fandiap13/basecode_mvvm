@@ -1,17 +1,18 @@
 import 'package:basecode/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-enum AppTextFieldLabelPosition { outside, floating }
+enum AppDropdownFieldLabelPosition { outside, floating }
 
-enum AppTextFieldVariant { primary, secondary, danger, warning, info, dark }
+// variant
+enum AppDropdownFieldVariant { primary, secondary, danger, warning, info, dark }
 
 // size
-enum AppTextFieldSize {
+enum AppDropdownFieldSize {
   small(vPadding: 8, hPadding: 12, fontSize: 13),
   medium(vPadding: 12, hPadding: 16, fontSize: 14),
   large(vPadding: 16, hPadding: 20, fontSize: 16);
 
-  const AppTextFieldSize({
+  const AppDropdownFieldSize({
     required this.vPadding,
     required this.hPadding,
     required this.fontSize,
@@ -22,34 +23,31 @@ enum AppTextFieldSize {
   final double fontSize;
 }
 
-class AppTextField extends StatelessWidget {
-  const AppTextField({
+class AppDropdownField<T> extends StatelessWidget {
+  const AppDropdownField({
     super.key,
-    this.controller,
+    required this.items,
+    this.value, // gak pake controller
     this.label,
     this.hint,
     this.helperText,
     this.errorText,
     this.prefixIcon,
-    this.suffixIcon,
     this.onPrefixTap,
+    this.suffixIcon,
     this.onSuffixTap,
-    this.obscureText = false,
-    this.keyboardType,
-    this.enabled = true,
-    this.readOnly = false,
-    this.maxLines = 1,
     this.onChanged,
-    this.onSubmitted,
+    this.enabled = true,
     this.decoration,
     this.focusNode,
-    this.labelPosition = AppTextFieldLabelPosition.outside,
-    this.variant = AppTextFieldVariant.primary,
-    this.size = AppTextFieldSize.medium,
+    this.labelPosition = AppDropdownFieldLabelPosition.outside,
+    this.variant = AppDropdownFieldVariant.primary,
+    this.size = AppDropdownFieldSize.medium,
     this.radius,
   });
 
-  final TextEditingController? controller;
+  final List<DropdownMenuItem<T>> items;
+  final T? value;
 
   final String? label;
   final String? hint;
@@ -57,44 +55,39 @@ class AppTextField extends StatelessWidget {
   final String? errorText;
 
   final IconData? prefixIcon;
-  final IconData? suffixIcon;
-
   final VoidCallback? onPrefixTap;
+
+  final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
 
-  final bool obscureText;
-  final TextInputType? keyboardType;
-  final bool enabled;
-  final bool readOnly;
-  final int maxLines;
-  final double? radius;
+  final ValueChanged<T?>? onChanged;
 
-  final ValueChanged<String>? onChanged;
-  final ValueChanged<String>? onSubmitted;
+  final bool enabled;
 
   final InputDecoration? decoration;
 
+  final AppDropdownFieldSize size;
+  final double? radius;
+
   final FocusNode? focusNode;
-  final AppTextFieldLabelPosition labelPosition;
-  final AppTextFieldVariant variant;
-  final AppTextFieldSize size;
+  final AppDropdownFieldLabelPosition labelPosition;
+  final AppDropdownFieldVariant variant;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final c = theme.appColors;
-    final isFloating = labelPosition == AppTextFieldLabelPosition.floating;
+    final isFloating = labelPosition == AppDropdownFieldLabelPosition.floating;
 
-    final inputColor = switch (variant) {
-      AppTextFieldVariant.primary => c.primary,
-      AppTextFieldVariant.secondary => c.secondary,
-      AppTextFieldVariant.danger => c.danger,
-      AppTextFieldVariant.warning => c.warning,
-      AppTextFieldVariant.info => c.info,
-      AppTextFieldVariant.dark => c.ink,
+    final dropdownColor = switch (variant) {
+      AppDropdownFieldVariant.primary => c.primary,
+      AppDropdownFieldVariant.secondary => c.secondary,
+      AppDropdownFieldVariant.danger => c.danger,
+      AppDropdownFieldVariant.warning => c.warning,
+      AppDropdownFieldVariant.info => c.info,
+      AppDropdownFieldVariant.dark => c.ink,
     };
 
-    // Tanpa radius: ikut theme, supaya tidak ada angka hardcode di sini.
     final borderRadius = radius != null
         ? BorderRadius.circular(radius!)
         : (theme.inputDecorationTheme.enabledBorder as OutlineInputBorder?)
@@ -107,14 +100,14 @@ class AppTextField extends StatelessWidget {
           borderSide: BorderSide(color: color, width: width),
         );
 
-    final field = AnimatedContainer(
+    final dropdownField = AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       decoration: BoxDecoration(
         borderRadius: borderRadius,
         boxShadow: focusNode?.hasFocus == true
             ? [
                 BoxShadow(
-                  color: inputColor.withValues(alpha: 0.12),
+                  color: dropdownColor.withValues(alpha: 0.12),
                   offset: Offset.zero,
                   blurRadius: 6,
                   spreadRadius: 1,
@@ -122,42 +115,43 @@ class AppTextField extends StatelessWidget {
               ]
             : null,
       ),
-      child: TextField(
-        controller: controller,
+      child: DropdownButtonFormField<T>(
         focusNode: focusNode,
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        enabled: enabled,
-        readOnly: readOnly,
-        maxLines: obscureText ? 1 : maxLines,
-        onChanged: onChanged,
-        onSubmitted: onSubmitted,
-        // Ukuran huruf dari size; warna dan gaya lain ikut tema.
-        style: TextStyle(fontSize: size.fontSize),
-        // Dasar dari inputDecorationTheme, lalu decoration pemanggil,
-        // lalu yang khas AppTextField.
+        initialValue: value,
+        items: items,
+        onChanged: enabled ? onChanged : null,
+        // height dibiarkan bawaan font; menaikkannya justru menumpuk
+        // ruang di atas glyph sehingga huruf terdorong ke bawah.
+        style: theme.textTheme.labelMedium?.copyWith(
+          fontSize: size.fontSize,
+          height: 1,
+        ),
+        alignment: Alignment.centerLeft,
+        isExpanded: true,
         decoration: (decoration ?? const InputDecoration()).copyWith(
           isDense: true,
-          // contentPadding pemanggil menang; tanpa itu pakai metrik size.
           contentPadding:
-              (decoration?.contentPadding) ??
+              decoration?.contentPadding ??
               EdgeInsets.symmetric(
                 horizontal: size.hPadding,
                 vertical: size.vPadding,
               ),
-          fillColor: inputColor.withValues(alpha: 0.05),
+          filled: true,
+          fillColor: dropdownColor.withValues(alpha: 0.05),
           labelText: isFloating ? label : null,
           hintText: hint,
           helperText: helperText,
           errorText: errorText,
+
           prefixIcon: prefixIcon != null
               ? IconButton(onPressed: onPrefixTap, icon: Icon(prefixIcon))
               : null,
           suffixIcon: suffixIcon != null
               ? IconButton(onPressed: onSuffixTap, icon: Icon(suffixIcon))
               : null,
-          enabledBorder: border(inputColor),
-          focusedBorder: border(inputColor, width: 2),
+          // border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          enabledBorder: border(dropdownColor),
+          focusedBorder: border(dropdownColor, width: 2),
           errorBorder: border(c.danger),
           focusedErrorBorder: border(c.danger, width: 2),
           disabledBorder: border(c.line.withValues(alpha: 0.5)),
@@ -165,14 +159,14 @@ class AppTextField extends StatelessWidget {
       ),
     );
 
-    if (isFloating || label == null) return field;
+    if (isFloating || label == null) return dropdownField;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label!, style: theme.textTheme.labelMedium),
         const SizedBox(height: 6),
-        field,
+        dropdownField,
       ],
     );
   }

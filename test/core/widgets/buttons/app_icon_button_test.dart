@@ -54,21 +54,24 @@ void main() {
     expect(taps, 0);
   });
 
-  testWidgets('spinner mengikuti foregroundColor variant', (tester) async {
-    final colors = AppTheme.light().appColors;
+  Color? spinnerColor(WidgetTester tester) {
+    return tester
+        .widget<CircularProgressIndicator>(
+          find.byType(CircularProgressIndicator),
+        )
+        .color;
+  }
 
-    // Variant solid: ikon putih di atas background pekat.
+  testWidgets('spinner variant solid memakai warna surface', (tester) async {
     await pumpButton(
       tester,
       AppIconButton(icon: Icons.add, isLoading: true, onPressed: () {}),
     );
 
-    var spinner = tester.widget<CircularProgressIndicator>(
-      find.byType(CircularProgressIndicator),
-    );
-    expect(spinner.color, colors.surface);
+    expect(spinnerColor(tester), AppTheme.light().appColors.surface);
+  });
 
-    // Variant datar: ikon gelap di atas latar halaman.
+  testWidgets('spinner variant outline memakai warna ink', (tester) async {
     await pumpButton(
       tester,
       AppIconButton(
@@ -79,10 +82,7 @@ void main() {
       ),
     );
 
-    spinner = tester.widget<CircularProgressIndicator>(
-      find.byType(CircularProgressIndicator),
-    );
-    expect(spinner.color, colors.ink);
+    expect(spinnerColor(tester), AppTheme.light().appColors.ink);
   });
 
   testWidgets('tooltip terpasang saat diisi', (tester) async {

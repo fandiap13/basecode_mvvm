@@ -30,6 +30,7 @@ abstract final class AppColors {
   static const Color white = surface;
 
   // Semantic
+  static const Color info = brand;
   static const Color primary = teal;
   static const Color success = teal;
   static const Color warning = amber;
@@ -67,6 +68,7 @@ abstract final class AppColorsDark {
   static const Color white = surface;
 
   // Semantic
+  static const Color info = brand;
   static const Color primary = teal;
   static const Color success = teal;
   static const Color warning = amber;
@@ -100,6 +102,7 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
     required this.danger,
     required this.secondary,
     required this.secondaryTint,
+    required this.info,
   });
 
   final Color paper;
@@ -116,6 +119,7 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
   final Color redTint;
   final Color gridDot;
   final Color brand;
+  final Color info;
   final Color primary;
   final Color success;
   final Color warning;
@@ -147,6 +151,7 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
     danger: AppColors.danger,
     secondary: AppColors.secondary,
     secondaryTint: AppColors.secondaryTint,
+    info: AppColors.brand,
   );
 
   static const dark = AppColorsTheme(
@@ -170,6 +175,7 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
     danger: AppColorsDark.danger,
     secondary: AppColorsDark.secondary,
     secondaryTint: AppColorsDark.secondaryTint,
+    info: AppColors.brand,
   );
 
   // membuat salinan dengan beberapa nilai diubah
@@ -198,6 +204,7 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
     Color? danger,
     Color? secondary,
     Color? secondaryTint,
+    Color? info,
   }) {
     return AppColorsTheme(
       paper: paper ?? this.paper,
@@ -220,6 +227,7 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
       danger: danger ?? this.danger,
       secondary: secondary ?? this.secondary,
       secondaryTint: secondaryTint ?? this.secondaryTint,
+      info: info ?? this.info,
     );
   }
 
@@ -249,6 +257,7 @@ class AppColorsTheme extends ThemeExtension<AppColorsTheme> {
       danger: Color.lerp(danger, other.danger, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
       secondaryTint: Color.lerp(secondaryTint, other.secondaryTint, t)!,
+      info: Color.lerp(info, other.info, t)!,
     );
   }
 }

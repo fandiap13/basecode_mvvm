@@ -1,4 +1,5 @@
 import 'package:basecode/core/theme/app_colors.dart';
+import 'package:basecode/core/theme/app_radius.dart';
 import 'package:basecode/core/widgets/text_field/app_text_field.dart';
 import 'package:basecode/features/showcase/view/widgets/section_showcase.dart';
 import 'package:flutter/material.dart';
@@ -65,12 +66,69 @@ class TextFieldShowcaseScreenState extends State<TextFieldShowcaseScreen> {
         padding: const EdgeInsets.all(16),
         children: [
           const SectionShowcase(
-            'Label & hint',
+            'Label position',
             description:
-                'label melayang di atas saat diisi, hint hanya '
-                'tampil selama kolom masih kosong.',
+                'outside (default): label sebagai teks di atas '
+                'kolom. floating: label menempel di dalam kolom.',
           ),
           const AppTextField(label: 'Nama lengkap', hint: 'Contoh: Fandy'),
+          const SizedBox(height: 16),
+          const AppTextField(
+            label: 'Nama lengkap',
+            hint: 'Contoh: Fandy',
+            labelPosition: AppTextFieldLabelPosition.floating,
+          ),
+
+          const SectionShowcase(
+            'Variant',
+            description:
+                'Menentukan warna border dan latar kolom. '
+                'Diambil dari token tema.',
+          ),
+          for (final variant in AppTextFieldVariant.values)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: AppTextField(
+                label: variant.name,
+                hint: 'variant: ${variant.name}',
+                variant: variant,
+              ),
+            ),
+
+          const SectionShowcase(
+            'Size',
+            description:
+                'Tiap ukuran membawa metrik sendiri (vPadding, '
+                'hPadding, fontSize).',
+          ),
+          for (final size in AppTextFieldSize.values)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: AppTextField(
+                label: size.name,
+                hint: 'size: ${size.name}',
+                size: size,
+              ),
+            ),
+
+          const SectionShowcase(
+            'Radius',
+            description:
+                'Tanpa radius: ikut inputDecorationTheme. '
+                'Diisi: menimpa untuk kolom itu saja.',
+          ),
+          for (final entry in const <(String, double)>[
+            ('xs', AppRadius.xs),
+            ('md', AppRadius.md),
+            ('xl', AppRadius.xl),
+          ])
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: AppTextField(
+                label: 'radius ${entry.$1}',
+                radius: entry.$2,
+              ),
+            ),
 
           const SectionShowcase(
             'Helper text',
@@ -179,16 +237,20 @@ class TextFieldShowcaseScreenState extends State<TextFieldShowcaseScreen> {
           const SectionShowcase(
             'decoration',
             description:
-                'Menimpa InputDecoration bawaan untuk kasus khusus. '
-                'label, hint, helper, error, dan ikon tetap dipasang '
-                'AppTextField di atasnya.',
+                'Melanjutkan inputDecorationTheme, bukan '
+                'menimpanya. Yang tidak diisi tetap ikut theme.',
           ),
           const AppTextField(
-            label: 'Border tanpa garis',
-            hint: 'filled: true',
+            label: 'Tanpa latar',
+            hint: 'filled: false',
+            decoration: InputDecoration(filled: false),
+          ),
+          const SizedBox(height: 16),
+          const AppTextField(
+            label: 'Rapat',
+            hint: 'contentPadding dipersempit',
             decoration: InputDecoration(
-              filled: true,
-              border: OutlineInputBorder(borderSide: BorderSide.none),
+              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
           ),
 

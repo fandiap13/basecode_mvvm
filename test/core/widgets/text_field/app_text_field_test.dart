@@ -1,3 +1,4 @@
+import 'package:basecode/core/theme/app_radius.dart';
 import 'package:basecode/core/theme/app_theme.dart';
 import 'package:basecode/core/widgets/text_field/app_text_field.dart';
 import 'package:flutter/material.dart';
@@ -95,6 +96,7 @@ void main() {
       tester,
       const AppTextField(
         label: 'Nama',
+        labelPosition: AppTextFieldLabelPosition.floating,
         decoration: InputDecoration(filled: true),
       ),
     );
@@ -103,5 +105,76 @@ void main() {
     // filled ikut dari decoration, label tetap dipasang AppTextField.
     expect(field.decoration!.filled, isTrue);
     expect(field.decoration!.labelText, 'Nama');
+  });
+
+  testWidgets('label outside dirender di luar kolom', (tester) async {
+    await pumpField(tester, const AppTextField(label: 'Nama'));
+
+    final field = tester.widget<TextField>(find.byType(TextField));
+    expect(field.decoration!.labelText, isNull);
+    expect(find.text('Nama'), findsOneWidget);
+  });
+
+  testWidgets('radius menimpa nilai dari theme', (tester) async {
+    await pumpField(tester, const AppTextField(radius: AppRadius.xl));
+
+    final field = tester.widget<TextField>(find.byType(TextField));
+    final border = field.decoration!.enabledBorder! as OutlineInputBorder;
+
+    expect(border.borderRadius, BorderRadius.circular(AppRadius.xl));
+  });
+
+  testWidgets('border dan radius mengikuti theme', (tester) async {
+    await pumpField(tester, const AppTextField());
+
+    final field = tester.widget<TextField>(find.byType(TextField));
+    final border = field.decoration!.enabledBorder! as OutlineInputBorder;
+    final fromTheme =
+        AppTheme.light().inputDecorationTheme.enabledBorder!
+            as OutlineInputBorder;
+
+    expect(border.borderRadius, fromTheme.borderRadius);
+  });
+
+  testWidgets('size default adalah medium', (tester) async {
+    await pumpField(tester, const AppTextField());
+
+    final field = tester.widget<TextField>(find.byType(TextField));
+    expect(
+      field.decoration!.contentPadding,
+      EdgeInsets.symmetric(
+        horizontal: AppTextFieldSize.medium.hPadding,
+        vertical: AppTextFieldSize.medium.vPadding,
+      ),
+    );
+    expect(field.style!.fontSize, AppTextFieldSize.medium.fontSize);
+  });
+
+  testWidgets('size mengatur padding dan huruf', (tester) async {
+    await pumpField(tester, const AppTextField(size: AppTextFieldSize.large));
+
+    final field = tester.widget<TextField>(find.byType(TextField));
+    expect(
+      field.decoration!.contentPadding,
+      EdgeInsets.symmetric(
+        horizontal: AppTextFieldSize.large.hPadding,
+        vertical: AppTextFieldSize.large.vPadding,
+      ),
+    );
+    expect(field.style!.fontSize, AppTextFieldSize.large.fontSize);
+  });
+
+  testWidgets('contentPadding pemanggil mengalahkan size', (tester) async {
+    const rapat = EdgeInsets.symmetric(horizontal: 12, vertical: 8);
+    await pumpField(
+      tester,
+      const AppTextField(
+        size: AppTextFieldSize.large,
+        decoration: InputDecoration(contentPadding: rapat),
+      ),
+    );
+
+    final field = tester.widget<TextField>(find.byType(TextField));
+    expect(field.decoration!.contentPadding, rapat);
   });
 }

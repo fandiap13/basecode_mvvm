@@ -64,6 +64,25 @@ abstract final class AppTheme {
           side: BorderSide(color: colors.line),
         ),
       ),
+
+      // input theme. Styling default
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: colors.primary.withValues(alpha: 0.05),
+        border: _inputBorder(colors.line),
+        enabledBorder: _inputBorder(colors.line),
+        focusedBorder: _inputBorder(colors.primary, width: 2),
+        errorBorder: _inputBorder(colors.danger),
+        focusedErrorBorder: _inputBorder(colors.danger, width: 2),
+        disabledBorder: _inputBorder(colors.line.withValues(alpha: 0.5)),
+      ),
+    );
+  }
+
+  static OutlineInputBorder _inputBorder(Color color, {double width = 1}) {
+    return OutlineInputBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(AppRadius.md)),
+      borderSide: BorderSide(color: color, width: width),
     );
   }
 }
