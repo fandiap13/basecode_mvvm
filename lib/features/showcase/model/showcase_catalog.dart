@@ -109,12 +109,14 @@ const showcaseEntries = <ShowcaseEntry>[
     subtitle: 'In-screen Nav',
     route: AppRoutes.showcaseTabs,
     icon: Icons.tab_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Tabs Bussines',
     subtitle: 'Tab bussines (main)',
     route: AppRoutes.showcaseMainTabs,
     icon: Icons.tab_outlined,
+    isReady: true,
   ),
   ShowcaseEntry(
     title: 'Progress',

@@ -1,19 +1,10 @@
 import 'dart:async';
 
+import 'package:basecode/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 // variant
-// TODO: LANJUTIN INI
-enum AppCarouselVariant {
-  primary,
-  secondary,
-  danger,
-  warning,
-  info,
-  outline,
-  text,
-  dark,
-}
+enum AppCarouselVariant { primary, secondary, danger, warning, info, dark }
 
 class AppCarousel extends StatefulWidget {
   const AppCarousel({
@@ -27,6 +18,7 @@ class AppCarousel extends StatefulWidget {
     this.onPageChanged,
     this.showIndicator = true,
     this.indicatorSpacing = 8,
+    this.variant = AppCarouselVariant.primary,
   });
 
   final List<Widget> items;
@@ -41,6 +33,8 @@ class AppCarousel extends StatefulWidget {
 
   final bool showIndicator;
   final double indicatorSpacing;
+
+  final AppCarouselVariant variant;
 
   @override
   State<AppCarousel> createState() => _AppCarouselState();
@@ -107,6 +101,17 @@ class _AppCarouselState extends State<AppCarousel> {
       return const SizedBox.shrink();
     }
 
+    final theme = Theme.of(context);
+    final c = theme.appColors;
+    final carouselColor = switch (widget.variant) {
+      AppCarouselVariant.primary => c.primary,
+      AppCarouselVariant.secondary => c.secondary,
+      AppCarouselVariant.danger => c.danger,
+      AppCarouselVariant.warning => c.warning,
+      AppCarouselVariant.info => c.info,
+      AppCarouselVariant.dark => c.ink,
+    };
+
     return Column(
       children: [
         SizedBox(
@@ -135,9 +140,8 @@ class _AppCarouselState extends State<AppCarousel> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: isActive
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.onSurface
-                            .withValues(alpha: 0.2),
+                      ? carouselColor
+                      : c.surface.withValues(alpha: 0.2),
                 ),
               );
             }),

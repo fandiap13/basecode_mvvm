@@ -4,9 +4,9 @@ import 'package:basecode/features/showcase/view/bottom_sheet/bottom_sheet_showca
 import 'package:basecode/features/showcase/view/button/button_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/button/icon_button_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/card/card_showcase_screen.dart';
-import 'package:basecode/features/showcase/view/chip/chip_badge_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/carousel/carousel_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/checkbox/checkbox_radio_showcase_screen.dart';
+import 'package:basecode/features/showcase/view/chip/chip_badge_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/dropdown/dropdown_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/empty_error/empty_error_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/feedback/feedback_showcase_screen.dart';
@@ -23,6 +23,8 @@ import 'package:basecode/features/showcase/view/showcase_screen.dart';
 import 'package:basecode/features/showcase/view/skeleton/skeleton_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/slider/slider_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/switch/switch_showcase_screen.dart';
+import 'package:basecode/features/showcase/view/tab/tab_bussines_showcase_screen.dart';
+import 'package:basecode/features/showcase/view/tab/tab_showcase_screen.dart';
 import 'package:basecode/features/showcase/view/text_field/text_field_showcase_screen.dart';
 import 'package:basecode/routing/routes.dart';
 import 'package:go_router/go_router.dart';
@@ -106,6 +108,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.showcaseAppBar,
       builder: (context, state) => const AppBarShowcaseScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.showcaseTabs,
+      builder: (context, state) => const TabShowcaseScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.showcaseMainTabs,
+      builder: (context, state) => const TabBussinesShowcaseScreen(),
     ),
 
     // showcase - foundation

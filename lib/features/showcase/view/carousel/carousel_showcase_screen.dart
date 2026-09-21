@@ -81,6 +81,29 @@ class CarouselShowcaseScreenState extends State<CarouselShowcaseScreen> {
           ),
 
           const SectionShowcase(
+            'Variant',
+            description:
+                'Menentukan warna indikator aktif. Diambil dari '
+                'token tema.',
+          ),
+          for (final variant in AppCarouselVariant.values)
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.md),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(variant.name, style: theme.textTheme.bodyMedium),
+                  const SizedBox(height: AppSpacing.xs),
+                  AppCarousel(
+                    height: 120,
+                    variant: variant,
+                    items: [for (var i = 1; i <= 3; i++) _Slide(index: i)],
+                  ),
+                ],
+              ),
+            ),
+
+          const SectionShowcase(
             'onPageChanged',
             description:
                 'Dipanggil tiap halaman berganti; dipakai layar '
