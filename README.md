@@ -209,5 +209,5 @@ Prioritas SDK dulu. Yang terpasang saat ini:
 | `go_router` | Routing deklaratif |
 | `cupertino_icons` | Bawaan template |
 
-Tanpa code generation, tanpa pustaka state management pihak ketiga.
-Detail aturannya ada di `CLAUDE.md`.
+<!-- Tanpa code generation, tanpa pustaka state management pihak ketiga.
+Detail aturannya ada di `CLAUDE.md`. -->
